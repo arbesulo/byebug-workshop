@@ -6,7 +6,7 @@ require 'byebug'
 def run
   (1..3).each do |idx|
     debugger
-    puts idx
+    idx
   end
 end
 
