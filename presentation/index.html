@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>Byebug workshop</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -12,12 +12,272 @@
 
 		<!-- Theme used for syntax highlighted code -->
 		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<style>
+			code {
+				color: orange;
+			}
+			.command {
+				color: green;
+			}
+			.left {
+				text-align: left;
+			}
+
+		</style>
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>Debugging Workshop</section>
+
+				<section>
+					Ways to debug
+					<p class="fragment">puts</p>
+					<p class="fragment">Rails.logger</p>
+					<p class="fragment">
+						<span style="color:red">P</span><span style="color:green">r</span><span style="color:cyan">y</span></p>
+					<p class="fragment">Byebug</p>
+				</section>
+
+				<section>
+					<p>Byebug</p>
+					<p class="fragment">Main features</p>
+					<p class="fragment">Step through the different code parts</p>
+					<p class="fragment">Set breakpoints with conditionals</p>
+					<p class="fragment">View the status of the application in the different stack levels</p>
+				</section>
+
+				<section>
+					<p>How to use it?</p>
+					<p class="fragment">put a <code>debugger</code> somewhere in your code</p>
+					<p class="fragment">
+						<img src="assets/byebug_sample.png"/>
+					</p>
+				</section>
+
+				<section>
+					<p>Commands</p>
+
+						<pre style="font-size: 0.3em;">
+break      -- Sets breakpoints in the source code
+catch      -- Handles exception catchpoints
+condition  -- Sets conditions on breakpoints
+continue   -- Runs until program ends, hits a breakpoint or reaches a line
+debug      -- Spawns a subdebugger
+delete     -- Deletes breakpoints
+disable    -- Disables breakpoints or displays
+display    -- Evaluates expressions every time the debugger stops
+down       -- Moves to a lower frame in the stack trace
+edit       -- Edits source files
+enable     -- Enables breakpoints or displays
+finish     -- Runs the program until frame returns
+frame      -- Moves to a frame in the call stack
+help       -- Helps you using byebug
+history    -- Shows byebug's history of commands
+info       -- Shows several informations about the program being debugged
+interrupt  -- Interrupts the program
+irb        -- Starts an IRB session
+kill       -- Sends a signal to the current process
+list       -- Lists lines of source code
+method     -- Shows methods of an object, class or module
+next       -- Runs one or more lines of code
+pry        -- Starts a Pry session
+quit       -- Exits byebug
+restart    -- Restarts the debugged program
+save       -- Saves current byebug session to a file
+set        -- Modifies byebug settings
+show       -- Shows byebug settings
+skip       -- Runs until the next breakpoint as long as it is different from the current one
+source     -- Restores a previously saved byebug session
+step       -- Steps into blocks or methods one or more times
+thread     -- Commands to manipulate threads
+tracevar   -- Enables tracing of a global variable
+undisplay  -- Stops displaying all or some expressions when program stops
+untracevar -- Stops tracing a global variable
+up         -- Moves to a higher frame in the stack trace
+var        -- Shows variables and its values
+where      -- Displays the backtrace
+						</pre>
+				</section>
+
+				<section>
+					<p>What we will see</p>
+
+						<pre style="font-size: 0.3em;">
+break      -- Sets breakpoints in the source code
+catch      -- Handles exception catchpoints
+condition  -- Sets conditions on breakpoints
+continue   -- Runs until program ends, hits a breakpoint or reaches a line
+delete     -- Deletes breakpoints
+display    -- Evaluates expressions every time the debugger stops
+frame      -- Moves to a frame in the call stack
+help       -- Helps you using byebug
+info       -- Shows several informations about the program being debugged
+list       -- Lists lines of source code
+next       -- Runs one or more lines of code
+step       -- Steps into blocks or methods one or more times
+undisplay  -- Stops displaying all or some expressions when program stops
+var        -- Shows variables and its values
+where      -- Displays the backtrace
+						</pre>
+				</section>
+
+
+				<section>
+					<section>
+						<p class="command">help</p>
+						<p class="command">help &lt;command&gt;</p>
+						<p class="fragment">displays the help</p>
+					</section>
+					<section>
+						<img src="assets/help_command.png"/>
+					</section>
+				</section>
+
+				<section>
+					<p class="command">continue</p>
+					<p>Runs until program ends, hits a breakpoint or reaches a line</p>
+				</section>
+
+				<section>
+					<section>
+						<p class="command">display</p>
+						<p>Evaluates expressions every time the debugger stops</p>
+						<p class="fragment">very useful when debugging loops</p>
+						<p class="fragment left">usage:<br/>
+							<code>display &lt;expression&gt;</code><br/>
+							<code>display</code>
+						</p>
+					</section>
+					<section>
+						<img src="assets/display.png">
+					</section>
+				</section>
+
+
+				<section>
+					<p class="command">undisplay</p>
+					<p>Stops displaying all or some expressions when program stops</p>
+					<p class="fragment left">usage: <code>undisplay &lt;expression number&gt;</code></p>
+				</section>
+
+				<section>
+					<p class="command">break</p>
+					<p>Sets breakpoints in the source code</p>
+					<p class="fragment left">usage:<br/>
+						<code>break [&lt;file&gt;:]&lt;line&gt; [if &lt;expr&gt;]</code><br/><br/>
+						<code>break [&lt;module&gt;::...]&lt;class&gt;(.|#)&lt;method&gt; [if &lt;expr&gt;]</code><br/><br/>
+						<code>break</code>
+					</p>
+				</section>
+
+				<section>
+					<p class="command">condition</p>
+					<p>Sets conditions on breakpoints</p>
+					<p class="fragment left">usage:<br/>
+						<code>condition [&lt;cond number&gt;] [expr]</code><br/>
+					</p>
+				</section>
+
+				<section>
+					<p class="command">info</p>
+					<p>Shows several informations about the program being debugged</p>
+					<p class="fragment left">usage:<br/>
+						<code>info breakpoints</code><br/>
+						<code>info display</code><br/>
+						<code>info file</code><br/>
+						<code>info line</code><br/>
+						<code>info program</code><br/>
+					</p>
+				</section>
+
+				<section>
+					<p class="command">delete</p>
+					<p>Deletes breakpoints<br/>
+						Without and argument, deletes all breakpoints.<br/>
+						With integer arguments, it deletes specific breakpoints.
+					</p>
+					<p class="fragment left">usage:<br/>
+						<code>info breakpoints</code><br/>
+						<code>info display</code><br/>
+						<code>info file</code><br/>
+						<code>info line</code><br/>
+						<code>info program</code><br/>
+					</p>
+				</section>
+
+				<section>
+					<section>
+						<p class="command">where</p>
+						<p>Displays the backtrace</p>
+						<p class="fragment left">usage: <code>where</code></p>
+					</section>
+					<section>
+						<img src="assets/where.png" />
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<p class="command">frame</p>
+						<p> Moves to a frame in the call stack</p>
+						<p class="fragment left">usage: <code>frame &lt;frame number&gt;</code></p>
+					</section>
+					<section>
+						<img src="assets/frame.png" />
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<p class="command">list</p>
+						<p>Lists lines of source code</p>
+						<p class="fragment left">usage:<br/>
+							<code>list-</code> (show previous code)<br/>
+							<code>list</code> (show code after)<br/>
+							<code>list=</code> (back to execution point)<br/>
+							<code>list x-y</code> (show lines from x to y)<br/>
+						</p>
+					</section>
+					<section>
+						<img src="assets/list.png" />
+					</section>
+				</section>
+
+				<section>
+					<p class="command">eval</p>
+					<p> Undocumented. Evaluates variables that otherwise trigger debugger commands</p>
+					<p class="fragment left">usage: <code>eval &lt;expression&gt;</code></p>
+				</section>
+
+				<section>
+					<p class="command">next</p>
+					<p> Runs one or more lines of code</p>
+					<p class="fragment left">usage: <code>next [&lt;number of lines&gt;]</code></p>
+				</section>
+
+				<section>
+					<p class="command">step</p>
+					<p>Steps into blocks or methods one or more times</p>
+					<p class="fragment left">usage: <code>next [&lt;times&gt;]</code></p>
+				</section>
+
+				<section>
+					<p class="command">catch</p>
+					<p>Handles exception catchpoints</p>
+					<p class="fragment left">usage:<br/><br/>
+						<code>catch</code> lists catchpoints<br/>
+						<code>catch off</code> deletes all catchpoints<br/>
+						<code>catch &lt;exception&gt;</code> enables handling exception<br/>
+						<code>catch &lt;exception&gt; off</code> disables handling exception<br/>
+				</section>
+
+				<section>
+					<p>Thank you</p>
+				</section>
+				<section>
+					<p>Questions?</p>
+				</section>
 			</div>
 		</div>
 
